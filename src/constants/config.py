@@ -23,3 +23,9 @@ GOOGLE_SHEETS_CREDENTIALS = {
     "client_x509_cert_url": os.getenv('GOOGLE_SHEETS_CLIENT_X509_CERT_URL'),
     "universe_domain": os.getenv('GOOGLE_SHEETS_UNIVERSE_DOMAIN')
 }
+
+# Add logging to check if the environment variables are loaded correctly
+print(f"BOT_TOKEN: {BOT_TOKEN}")
+print(f"SHEET_NAME: {SHEET_NAME}")
+print(f"WORKSHEET_NAME: {WORKSHEET_NAME}")
+print(f"Google Sheets Type: {os.getenv('GOOGLE_SHEETS_TYPE')}")

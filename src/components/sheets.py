@@ -23,7 +23,6 @@ async def update_sheet(channel_id, message, bot):
     
     # Parse the JSON message
     try:
-        message  = message.replace('`', '')
         data = json.loads(message)
         required_fields = ["Name of Company", "Job Title", "Job ID", "Link", "Status", "Location"]
         

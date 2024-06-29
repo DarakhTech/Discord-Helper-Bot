@@ -32,7 +32,6 @@ jobs:
     - name: Run the bot
       env:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-
         GOOGLE_SHEETS_TYPE: ${{ secrets.GOOGLE_SHEETS_TYPE }}
         GOOGLE_SHEETS_PROJECT_ID: ${{ secrets.GOOGLE_SHEETS_PROJECT_ID }}
         GOOGLE_SHEETS_PRIVATE_KEY_ID: ${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY_ID }}
