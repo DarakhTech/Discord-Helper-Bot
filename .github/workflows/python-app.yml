@@ -24,10 +24,6 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-    - name: Decode Google Sheets credentials
-      run: |
-        echo ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }} | base64 --decode > src/constants/token.json
-
     - name: Run tests
       run: |
         # Add your test command here, e.g., pytest
@@ -36,6 +32,18 @@ jobs:
     - name: Run the bot
       env:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+        GOOGLE_SHEETS_TYPE: ${{ secrets.GOOGLE_SHEETS_TYPE }}
+        GOOGLE_SHEETS_PROJECT_ID: ${{ secrets.GOOGLE_SHEETS_PROJECT_ID }}
+        GOOGLE_SHEETS_PRIVATE_KEY_ID: ${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY_ID }}
+        GOOGLE_SHEETS_PRIVATE_KEY: ${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY }}
+        GOOGLE_SHEETS_CLIENT_EMAIL: ${{ secrets.GOOGLE_SHEETS_CLIENT_EMAIL }}
+        GOOGLE_SHEETS_CLIENT_ID: ${{ secrets.GOOGLE_SHEETS_CLIENT_ID }}
+        GOOGLE_SHEETS_AUTH_URI: ${{ secrets.GOOGLE_SHEETS_AUTH_URI }}
+        GOOGLE_SHEETS_TOKEN_URI: ${{ secrets.GOOGLE_SHEETS_TOKEN_URI }}
+        GOOGLE_SHEETS_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.GOOGLE_SHEETS_AUTH_PROVIDER_X509_CERT_URL }}
+        GOOGLE_SHEETS_CLIENT_X509_CERT_URL: ${{ secrets.GOOGLE_SHEETS_CLIENT_X509_CERT_URL }}
+        GOOGLE_SHEETS_UNIVERSE_DOMAIN: ${{ secrets.GOOGLE_SHEETS_UNIVERSE_DOMAIN }}
         SHEET_NAME: ${{ secrets.SHEET_NAME }}
         WORKSHEET_NAME: ${{ secrets.WORKSHEET_NAME }}
       run: |
