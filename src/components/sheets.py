@@ -3,15 +3,22 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from src.constants import config
 
-# Define the scope and credentials for Google Sheets
+# Define the scope for Google Sheets
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name(config.GOOGLE_SHEETS_CREDENTIALS_PATH, scope)
+
+# Use the credentials directly from the environment variables
+creds = ServiceAccountCredentials.from_json_keyfile_dict(config.GOOGLE_SHEETS_CREDENTIALS, scope)
 client = gspread.authorize(creds)
 
 async def update(ctx, *, message: str):
     await update_sheet(ctx.channel.id, message, ctx.bot)
     
 async def update_sheet(channel_id, message, bot):
+    if not client:
+        channel = bot.get_channel(channel_id)
+        await channel.send("Google Sheets client not initialized. Credentials are missing.")
+        return
+    
     channel = bot.get_channel(channel_id)
     
     # Parse the JSON message
