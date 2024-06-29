@@ -24,14 +24,18 @@ jobs:
       run: |
         pip install -r requirements.txt
 
+    - name: Decode Google Sheets credentials
+      run: |
+        echo ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }} | base64 --decode > src/constants/token.json
+
     - name: Run tests
       run: |
+        # Add your test command here, e.g., pytest
         echo "No tests available"
 
     - name: Run the bot
       env:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-        GOOGLE_SHEETS_CREDENTIALS_PATH: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_PATH }}
         SHEET_NAME: ${{ secrets.SHEET_NAME }}
         WORKSHEET_NAME: ${{ secrets.WORKSHEET_NAME }}
       run: |
