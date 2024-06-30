@@ -6,8 +6,8 @@ from src.constants import config
 # Define the scope for Google Sheets
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
-# Use the credentials directly from the environment variables
-creds = ServiceAccountCredentials.from_json_keyfile_dict(config.GOOGLE_SHEETS_CREDENTIALS, scope)
+# Use the credentials from the JSON file
+creds = ServiceAccountCredentials.from_json_keyfile_name(config.GOOGLE_SHEETS_CREDENTIALS_PATH, scope)
 client = gspread.authorize(creds)
 
 async def update(ctx, *, message: str):
