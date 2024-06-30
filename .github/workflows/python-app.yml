@@ -48,6 +48,11 @@ jobs:
 
       - name: Deploy and restart PM2 on VPS
         uses: appleboy/ssh-action@v0.1.0
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          GOOGLE_SHEETS_CREDENTIALS_PATH: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_PATH }}
+          SHEET_NAME: ${{ secrets.SHEET_NAME }}
+          WORKSHEET_NAME: ${{ secrets.WORKSHEET_NAME }}
         with:
           host: 129.154.225.47
           username: ubuntu
