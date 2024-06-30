@@ -27,6 +27,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install -r requirements.txt
+          pip install python-dotenv
           
       - name: Decode Google Sheets credentials
         run: |
@@ -35,6 +36,9 @@ jobs:
       - name: Set environment variables
         run: |
           echo "${{ secrets.ENV_VARIABLES }}" | base64 --decode > .env
+
+      - name: Check .env file
+        run: cat .env
 
       - name: Prepare deployment package
         run: |
