@@ -31,7 +31,13 @@ jobs:
       - name: Decode Google Sheets credentials
         run: |
           echo "${{ secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64 }}" | base64 --decode > src/constants/token.json
-          
+      
+      - name: Set environment variables
+        run: |
+          echo "BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          GOOGLE_SHEETS_CREDENTIALS_PATH: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_PATH }}
+          SHEET_NAME: ${{ secrets.SHEET_NAME }}
+          WORKSHEET_NAME: ${{ secrets.WORKSHEET_NAME }}" > .env
       - name: Prepare deployment package
         run: |
           tar czf discord_bot.tar.gz *
@@ -48,11 +54,6 @@ jobs:
 
       - name: Deploy and restart PM2 on VPS
         uses: appleboy/ssh-action@v0.1.0
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          GOOGLE_SHEETS_CREDENTIALS_PATH: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_PATH }}
-          SHEET_NAME: ${{ secrets.SHEET_NAME }}
-          WORKSHEET_NAME: ${{ secrets.WORKSHEET_NAME }}
         with:
           host: 129.154.225.47
           username: ubuntu
@@ -62,3 +63,4 @@ jobs:
             cd /home/ubuntu/discord_bot/
             tar xzf discord_bot.tar.gz
             pm2 restart reminder-bot || pm2 start app.py --name "reminder-bot"
+            pm2 save
