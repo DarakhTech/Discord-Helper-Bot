@@ -26,7 +26,7 @@ jobs:
 
       - name: Decode Google Sheets credentials
         run: |
-          echo ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64 }} | base64 --decode -o src/constants/token.json
+          echo ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64 }} | base64 --decode > src/constants/token.json
 
       - name: Run tests
         run: |
