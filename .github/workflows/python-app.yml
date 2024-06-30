@@ -34,7 +34,7 @@ jobs:
       
       - name: Set environment variables
         run: |
-          echo "${{ secrets.ENV_VARIABLES }}" | base64 --decode > /home/ubuntu/discord_bot/.env
+          echo "${{ secrets.ENV_VARIABLES }}" | base64 --decode > .env
 
       - name: Prepare deployment package
         run: |
