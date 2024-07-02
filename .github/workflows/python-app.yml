@@ -27,10 +27,10 @@ jobs:
         run: mkdir -p src/constants
 
       - name: Decode Google Sheets credentials
-        run: echo ${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}} | base64 --decode > src/constants/token.json
+        run: echo "${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}}" | base64 --decode > src/constants/token.json
       
       - name: Set environment variables
-        run: echo ${{secrets.ENV_VARIABLES}} | base64 --decode > .env
+        run: echo "${{secrets.ENV_VARIABLES}}" | base64 --decode > .env
 
       - name: Check .env file
         run: cat .env
@@ -75,10 +75,10 @@ jobs:
             tar xzf ~/discord_bot.tar.gz -C ~/discord_bot
             cd discord_bot
             touch .env
-            echo BOT_TOKEN=${{ secrets.API_KEY_GITHUB }} >> .env
-            echo GOOGLE_SHEETS_CREDENTIALS_PATH=${{ secrets.NEXT_PUBLIC_API_URL }} >> .env
-            echo SHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
-            echo WORKSHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
+            echo BOT_TOKEN=${{secrets.BOT_TOKEN}} >> .env
+            echo GOOGLE_SHEETS_CREDENTIALS_PATH=${{secrets.GOOGLE_SHEETS_CREDENTIALS_PATH}} >> .env
+            echo SHEET_NAME=${{secrets.SHEET_NAME}} >> .env
+            echo WORKSHEET_NAME=${{secrets.WORKSHEET_NAME}} >> .env
             cat .env
             mkdir -p src/constants
             touch src/constants/token.json
