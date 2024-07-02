@@ -32,9 +32,6 @@ jobs:
       - name: Set environment variables
         run: echo "${{secrets.ENV_VARIABLES}}" | base64 --decode > .env
 
-      - name: Check .env file
-        run: cat .env
-
       - name: Prepare deployment package
         run: tar czf discord_bot.tar.gz *
 
@@ -83,5 +80,6 @@ jobs:
             mkdir -p src/constants
             touch src/constants/token.json
             echo ${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}} | base64 --decode > src/constants/token.json
+            cd ../..
             pm2 start app.py --name "reminder-bot" || pm2 restart reminder-bot
             pm2 save
