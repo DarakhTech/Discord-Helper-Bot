@@ -80,7 +80,7 @@ jobs:
             cd ~/discord_bot
             touch .env
             echo BOT_TOKEN=${{ secrets.API_KEY_GITHUB }} >> .env
-            echo GOOGLE_SHEETS_CREDENTIALS_PATH=${{ secrets.NEXT_PUBLIC_API_URL }} >> .env
+            echo GOOGLE_SHEETS_CREDENTIALS_PATH=src/constants/token.json >> .env
             echo SHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
             echo WORKSHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
             cat .env
