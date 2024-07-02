@@ -31,11 +31,11 @@ jobs:
           
       - name: Decode Google Sheets credentials
         run: |
-          echo "${{ secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64 }}" | base64 --decode > src/constants/token.json
+          echo ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64 }} | base64 --decode > src/constants/token.json
       
       - name: Set environment variables
         run: |
-          echo "${{ secrets.ENV_VARIABLES }}" | base64 --decode > .env
+          echo ${{ secrets.ENV_VARIABLES }} | base64 --decode > .env
 
       - name: Check .env file
         run: cat .env
