@@ -55,10 +55,10 @@ jobs:
           script: |
             cd ~/discord_bot
             touch .env
-            echo BOT_TOKEN=${{ secrets.API_KEY_GITHUB }} >> .env
+            echo BOT_TOKEN=${{ secrets.BOT_TOKEN }} >> .env
             echo GOOGLE_SHEETS_CREDENTIALS_PATH=src/constants/token.json >> .env
-            echo SHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
-            echo WORKSHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
+            echo SHEET_NAME=${{ secrets.SHEET_NAME }} >> .env
+            echo WORKSHEET_NAME=${{ secrets.WORKSHEET_NAME }} >> .env
             mkdir -p src/constants
             echo ${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}} | base64 --decode > src/constants/token.json
             pm2 start app.py --name "reminder-bot" || pm2 restart reminder-bot
