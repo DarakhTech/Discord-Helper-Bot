@@ -36,36 +36,14 @@ jobs:
         run: |
           echo ${{secrets.ENV_VARIABLES}} | base64 --decode > .env
 
-      - name: Check .env file
-        run: cat .env
-
-      - name: Prepare deployment package
-        run: tar czf discord_bot.tar.gz *
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: discord_bot
-          path: discord_bot.tar.gz
-
-  deploy:
-    needs: setup
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: discord_bot
-
       - name: Copy files to VPS
         uses: appleboy/scp-action@v0.1.0
         with:
           host: ${{secrets.SERVER_IP}}
           username: ubuntu
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          source: "discord_bot.tar.gz"
-          target: "~/discord_bot.tar.gz"
+          source: "."
+          target: "~/discord_bot"
 
       - name: Deploy and restart PM2 on VPS
         uses: appleboy/ssh-action@v0.1.0
@@ -75,15 +53,12 @@ jobs:
           key: ${{secrets.SSH_PRIVATE_KEY}}
           port: 22
           script: |
-            mkdir -p ~/discord_bot
-            tar xzf ~/discord_bot.tar.gz -C ~/discord_bot
             cd ~/discord_bot
             touch .env
             echo BOT_TOKEN=${{ secrets.API_KEY_GITHUB }} >> .env
             echo GOOGLE_SHEETS_CREDENTIALS_PATH=src/constants/token.json >> .env
             echo SHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
             echo WORKSHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
-            cat .env
             mkdir -p src/constants
             echo ${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}} | base64 --decode > src/constants/token.json
             pm2 start app.py --name "reminder-bot" || pm2 restart reminder-bot
