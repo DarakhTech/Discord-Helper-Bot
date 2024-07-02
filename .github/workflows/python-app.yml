@@ -80,6 +80,5 @@ jobs:
             mkdir -p src/constants
             touch src/constants/token.json
             echo ${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}} | base64 --decode > src/constants/token.json
-            cd ../..
-            pm2 start app.py --name "reminder-bot" || pm2 restart reminder-bot
-            pm2 save
+            pwd
+            
