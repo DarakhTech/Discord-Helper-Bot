@@ -23,10 +23,11 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
           
+      - name: Create directories for credentials
+        run: mkdir -p src/constants
+
       - name: Decode Google Sheets credentials
-        run: |
-          mkdir -p src/constants
-          echo ${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}} | base64 --decode > src/constants/token.json
+        run: echo ${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}} | base64 --decode > src/constants/token.json
       
       - name: Set environment variables
         run: echo ${{secrets.ENV_VARIABLES}} | base64 --decode > .env
@@ -79,9 +80,8 @@ jobs:
             echo SHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
             echo WORKSHEET_NAME=${{ secrets.NEXT_PUBLIC_GITHUB_USERNAME }} >> .env
             cat .env
-            cd src/constants/
-            touch token.json
-            echo ${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}} | base64 --decode > token.json
-            cd ../..
+            mkdir -p src/constants
+            touch src/constants/token.json
+            echo ${{secrets.GOOGLE_SHEETS_CREDENTIALS_BASE64}} | base64 --decode > src/constants/token.json
             pm2 start app.py --name "reminder-bot" || pm2 restart reminder-bot
             pm2 save
