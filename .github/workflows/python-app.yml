@@ -51,7 +51,6 @@ jobs:
           host: ${{secrets.SERVER_IP}}
           username: ubuntu
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          port: 22
           script: |
             cd ~/discord_bot
             touch .env
