@@ -43,6 +43,11 @@ async def update(ctx, *, message: str):
 @bot.command()
 async def hash(ctx, *, message: str):
     await id.hash(ctx, message=message)
+    
+@commands.has_permissions(administrator=True)
+@bot.command()
+async def clear(ctx, number: int = 1):
+  await ctx.channel.purge(limit=number)
 
 
 bot.run(config.BOT_TOKEN)

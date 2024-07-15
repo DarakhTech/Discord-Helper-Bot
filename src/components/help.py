@@ -32,6 +32,13 @@ def get_commands_embed():
         value="Return HASH ID for the given message.",
         inline=False
     )
+    
+    embed.add_field(
+        name="/clear number",
+        value="Purges the given number of messages in the channel.",
+        inline=False
+    )
+    
     embed.set_footer(text="Use these commands to interact with the bot.")
     return embed
 
