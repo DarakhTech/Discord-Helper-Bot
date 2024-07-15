@@ -46,7 +46,7 @@ async def hash(ctx, *, message: str):
     
 @commands.has_permissions(administrator=True)
 @bot.command()
-async def clear(ctx, number: int = 1):
+async def clear(ctx, number: int = 0):
   await ctx.channel.purge(limit=number+1)
 
 
