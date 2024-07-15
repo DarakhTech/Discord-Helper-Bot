@@ -2,8 +2,7 @@ import random
 import hashlib
 
 async def hash(ctx, *, message: str):
-    hashstr = await encode_text(message)
-    await send_message(ctx.channel.id, message, hashstr, ctx.bot)
+    await send_message(ctx.channel.id, message, encode_text(message), ctx.bot)
     
 async def send_message(channel_id, message, hashstr, bot):
     channel = bot.get_channel(channel_id)
