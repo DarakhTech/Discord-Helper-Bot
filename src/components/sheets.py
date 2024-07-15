@@ -2,6 +2,7 @@ import json
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from src.constants import config
+import datetime
 
 # Define the scope for Google Sheets
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -14,6 +15,7 @@ async def update(ctx, *, message: str):
     await update_sheet(ctx.channel.id, message, ctx.bot)
     
 async def update_sheet(channel_id, message, bot):
+    date = datetime.datetime.now()
     if not client:
         channel = bot.get_channel(channel_id)
         await channel.send("Google Sheets client not initialized. Credentials are missing.")
@@ -34,7 +36,7 @@ async def update_sheet(channel_id, message, bot):
         
         # Append data to Google Sheets
         worksheet = client.open(config.SHEET_NAME).worksheet(config.WORKSHEET_NAME)
-        row = [data["Name of Company"], data["Job Title"], data["Job ID"], data["Link"], data["Status"], data["Location"]]
+        row = [data["Name of Company"], data["Job Title"], data["Job ID"], data["Link"], data["Status"], data["Location"], date.strftime("%d %B") ]
         worksheet.append_row(row)
         
         await channel.send("Data successfully appended to Google Sheet.")
