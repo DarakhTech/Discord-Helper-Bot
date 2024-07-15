@@ -71,6 +71,11 @@ This Discord bot allows users to set reminders, add events, manage work pauses, 
     ```plaintext
     /update `{"Name of Company": "Discord", "Job Title": "Engineer", "Job ID": "12345", "Link": "https://discord.com/careers", "Status": "Applied", "Location": "NY"}`
     ```
+## Images
+<img width="1624" alt="Screenshot 2024-07-09 at 4 23 03 AM" src="https://github.com/DarakhTech/Discord-Helper-Bot/assets/54445464/e26bc706-aae8-4938-a63d-31d14b8a0a8c">
+<img width="670" alt="Screenshot 2024-07-09 at 4 21 37 AM" src="https://github.com/DarakhTech/Discord-Helper-Bot/assets/54445464/e8ad2a08-b91c-46af-bc7f-eaf6c91cc198">
+<img width="670" alt="Screenshot 2024-07-09 at 4 24 08 AM" src="https://github.com/DarakhTech/Discord-Helper-Bot/assets/54445464/a12d02cb-9bb6-4e15-934b-3238d68a19e4">
+
 
 ## Contributing
 
