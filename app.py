@@ -40,7 +40,8 @@ async def wp(ctx, action: str, time: int = None):
 async def update(ctx, *, message: str):
     await sheets.update(ctx, message=message)
 
-async def id(ctx, *, message: str):
+@bot.command()
+async def hash(ctx, *, message: str):
     await id.hash(ctx, message=message)
 
 
