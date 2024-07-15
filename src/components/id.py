@@ -7,7 +7,19 @@ async def hash(ctx, *, message: str):
 async def send_message(channel_id, message, hashstr, bot):
     channel = bot.get_channel(channel_id)
     try:
-        await channel.send(f"The hash for {message}\n{hashstr}")
+        await channel.send(
+            f"""The hash for {message}\n{hashstr}\n\n```/update
+            {{
+                "Name of Company": "Aveg",
+                "Job Title": "Research Engineer",
+                "Job ID": "{hashstr}",
+                "Link": "{message}",
+                "Status": "Applied/Referral Requested/Looking/Applied",
+                "Location": "San Francisco"
+            }}```"""
+        )
+
+
     except Exception as e:
         await channel.send(f"An error occurred: {e}")
 
