@@ -27,6 +27,11 @@ def get_commands_embed():
         value="Ends the work-pause reminders.",
         inline=False
     )
+    embed.add_field(
+        name="/id message",
+        value="Return HASH ID for the given message.",
+        inline=False
+    )
     embed.set_footer(text="Use these commands to interact with the bot.")
     return embed
 

@@ -3,7 +3,7 @@ from discord.ext import commands
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from src.constants import config
-from src.components import events, reminder, work_pause, help, sheets
+from src.components import events, reminder, work_pause, help, sheets, id
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -39,6 +39,9 @@ async def wp(ctx, action: str, time: int = None):
 @bot.command()
 async def update(ctx, *, message: str):
     await sheets.update(ctx, message=message)
+
+async def id(ctx, *, message: str):
+    await id.hash(ctx, message=message)
 
 
 bot.run(config.BOT_TOKEN)

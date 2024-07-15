@@ -53,6 +53,7 @@ jobs:
           key: ${{secrets.SSH_PRIVATE_KEY}}
           script: |
             cd ~/discord_bot
+            rm .env
             touch .env
             echo BOT_TOKEN=${{ secrets.BOT_TOKEN }} >> .env
             echo GOOGLE_SHEETS_CREDENTIALS_PATH=src/constants/token.json >> .env
