@@ -1,21 +1,43 @@
 import random
 import hashlib
+import aiohttp
+import bs4
+
 
 async def hash(ctx, *, message: str):
     await send_message(ctx.channel.id, message, encode_text(message), ctx.bot)
     
+async def get_title(link):
+    returnstr = ""
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(link) as response:
+                response.raise_for_status()  # Ensure we handle HTTP errors
+                html = bs4.BeautifulSoup(await response.text(), features="lxml")
+                returnstr = html.title.text if html.title else "No title found"
+    except aiohttp.ClientError as e:
+        print(f"HTTP request error: {e}")
+    except bs4.FeatureNotFound as e:
+        print(f"BeautifulSoup feature error: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+    
+    return returnstr
+    
 async def send_message(channel_id, message, hashstr, bot):
+    
     channel = bot.get_channel(channel_id)
+    title_text = await get_title(message)
     try:
         await channel.send(
-            f"""The hash for {message}\n{hashstr}\n\n```/update
+            f"""The hash for {message}\n{hashstr}\n{title_text}\n```/update
             {{
-                "Name of Company": "Aveg",
-                "Job Title": "Research Engineer",
+                "Name of Company": "",
+                "Job Title": "",
                 "Job ID": "{hashstr}",
                 "Link": "{message}",
-                "Status": "Applied/Referral Requested/Looking/Applied",
-                "Location": "San Francisco"
+                "Status": "Looking",
+                "Location": ""
             }}```"""
         )
 
