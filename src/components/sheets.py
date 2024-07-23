@@ -42,5 +42,7 @@ async def update_sheet(channel_id, message, bot):
         await channel.send("Data successfully appended to Google Sheet.")
     except json.JSONDecodeError:
         await channel.send("Invalid JSON format.")
+    except gspread.exceptions.APIError as e:
+        await channel.send(f"Google Sheets API error: {e}")
     except Exception as e:
         await channel.send(f"An error occurred: {e}")
