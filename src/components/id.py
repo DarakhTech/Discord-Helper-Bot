@@ -2,11 +2,46 @@ import random
 import hashlib
 import aiohttp
 import bs4
+from oauth2client.service_account import ServiceAccountCredentials
+from src.constants import config
+import datetime
+import json
+import gspread
+import pandas as pd
 
+# Define the scope for Google Sheets
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+
+# Use the credentials from the JSON file
+creds = ServiceAccountCredentials.from_json_keyfile_name(config.GOOGLE_SHEETS_CREDENTIALS_PATH, scope)
+client = gspread.authorize(creds)
+
+async def get_id(encoded_id):
+    worksheet = client.open(config.SHEET_NAME).worksheet(config.WORKSHEET_NAME)
+    records = worksheet.get_all_records()
+    df = pd.DataFrame(records)
+    if encoded_id in df['ID'].values:
+        return False
+    return True
+    # try:
+    #     sheet = client.open_by_key(config.SHEET_NAME).worksheet(config.WORKSHEET_NAME)
+    #     records = sheet.get_all_records()
+    #     print(records)
+    #     df = pd.DataFrame(records)
+    #     if encoded_id in df['ID'].values:
+    #         return False
+    #     return True
+    # except Exception as e:
+    #     print(f"An error occurred while checking ID: {e}")
+    #     return False
 
 async def hash(ctx, *, message: str):
     await ctx.channel.purge(limit=1)
-    await send_message(ctx.channel.id, message, encode_text(message), ctx.bot)
+    encoded_id = encode_text(message)
+    if await get_id(encoded_id):
+        await send_message(ctx.channel.id, message, encoded_id, ctx.bot)
+    else:
+        await ctx.send(f"ID {encoded_id} already exists.")
     
 async def get_title(link):
     returnstr = ""
