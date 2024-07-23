@@ -40,7 +40,7 @@ async def update_sheet(ctx, channel_id, message, bot):
         worksheet.append_row(row)
         await ctx.channel.purge(limit=2)
         await channel.send(
-            f"""### {data["Name of Company"]} \nTitle:{data["Job Title"]}\nID:{data["Job ID"]}\n{data["Link"]}\n :ballot_box_with_check:"""
+            f"""**{data["Name of Company"]}** ```Title: {data["Job Title"]}\nID:{data["Job ID"]}``` {data["Link"]}"""
         )
         
     except json.JSONDecodeError:
