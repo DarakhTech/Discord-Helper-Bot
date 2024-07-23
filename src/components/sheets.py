@@ -12,9 +12,9 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(config.GOOGLE_SHEETS_CR
 client = gspread.authorize(creds)
 
 async def update(ctx, *, message: str):
-    await update_sheet(ctx.channel.id, message, ctx.bot)
+    await update_sheet(ctx, ctx.channel.id, message, ctx.bot)
     
-async def update_sheet(channel_id, message, bot):
+async def update_sheet(ctx, channel_id, message, bot):
     date = datetime.datetime.now()
     if not client:
         channel = bot.get_channel(channel_id)
@@ -38,8 +38,11 @@ async def update_sheet(channel_id, message, bot):
         worksheet = client.open(config.SHEET_NAME).worksheet(config.WORKSHEET_NAME)
         row = [data["Name of Company"], data["Job Title"], data["Job ID"], data["Link"], data["Status"], data["Location"], date.strftime("%d %B") ]
         worksheet.append_row(row)
+        await ctx.channel.purge(limit=2)
+        await channel.send(
+            f""""Data successfully appended to Google Sheet.\n```Company:{data["Name of Company"]}\nTitle:{data["Job Title"]}\nID:{data["Job ID"]}```\n{data["Link"]}"""
+        )
         
-        await channel.send("Data successfully appended to Google Sheet.")
     except json.JSONDecodeError:
         await channel.send("Invalid JSON format.")
     except gspread.exceptions.APIError as e:

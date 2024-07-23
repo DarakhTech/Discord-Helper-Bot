@@ -5,6 +5,7 @@ import bs4
 
 
 async def hash(ctx, *, message: str):
+    await ctx.channel.purge(limit=1)
     await send_message(ctx.channel.id, message, encode_text(message), ctx.bot)
     
 async def get_title(link):
