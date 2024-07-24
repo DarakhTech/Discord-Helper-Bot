@@ -41,7 +41,11 @@ async def hash(ctx, *, message: str):
     if await get_id(encoded_id):
         await send_message(ctx.channel.id, message, encoded_id, ctx.bot)
     else:
-        await ctx.send(f"ID {encoded_id} already exists.")
+        sent_message = await ctx.send(f"ID {encoded_id} already exists.")
+        await sent_message.add_reaction('❌')
+
+        
+
     
 async def get_title(link):
     returnstr = ""

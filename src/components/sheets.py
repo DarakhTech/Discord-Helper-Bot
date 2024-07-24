@@ -39,9 +39,10 @@ async def update_sheet(ctx, channel_id, message, bot):
         row = [data["Name of Company"], data["Job Title"], data["Job ID"], data["Link"], data["Status"], data["Location"], date.strftime("%d %B") ]
         worksheet.append_row(row)
         await ctx.channel.purge(limit=2)
-        await channel.send(
+        sent_message = await channel.send(
             f"""**{data["Name of Company"]}** ```Title: {data["Job Title"]}\nID:{data["Job ID"]}``` {data["Link"]}"""
         )
+        await sent_message.add_reaction('✅')
         
     except json.JSONDecodeError:
         await channel.send("Invalid JSON format.")
