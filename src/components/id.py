@@ -70,10 +70,10 @@ async def send_message(channel_id, message, hashstr, bot):
     title_text = await get_title(message)
     try:
         await channel.send(
-            f"""The hash for {message}\n{hashstr}\n{title_text}\n```/update
+            f"""The hash for {message}\n{hashstr}\n```/update
             {{
                 "Name of Company": "",
-                "Job Title": "",
+                "Job Title": "{title_text}",
                 "Job ID": "{hashstr}",
                 "Link": "{message}",
                 "Status": "Looking",
